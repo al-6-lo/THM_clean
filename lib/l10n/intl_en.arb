@@ -1,0 +1,97 @@
+{
+  "@@locale": "en",
+  "app_title": "Tele Health Monitoring",
+  "settings": "Settings",
+  "dark_mode": "Dark Mode",
+  "language": "Language",
+  "about_app": "About App",
+  "rate_app": "Rate the App",
+  "select_language": "Select Language",
+  "english": "English",
+  "arabic": "Arabic",
+  "cancel": "Cancel",
+  "submit": "Submit",
+  "app_settings": "App Settings",
+  "version": "Version",
+  "developedBy": "Developed By",
+  "close": " Close",
+  "average_rating": " Average Rating",
+  "added_successfully": "added successfully",
+  "deleted_successfully": " Patient deleted successfully!",
+  "confirm_deleted_bed": "Are you sure you want to delete this patient?",
+  "delete": "Delete Patient",
+  "maximum_beds_reached": "Maximum number of beds reached!",
+  "add_patient": "Add patient",
+  "bed_number": "Bed Number",
+  "please_bed_number": "Please enter the bed number",
+  "name": "Name",
+  "please_name": "Please enter a name",
+  "age": "Age",
+  "please_age": "Please enter age",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "phone_number": "Phone Number",
+  "pre": "+967",
+  "please_phone": "Please enter phone number",
+  "phone_9": "Phone number must be 9 digits",
+  "bed_exists": "Bed number already exists!",
+  "add": "Add",
+  "no_beds_yet": "There are no beds added yet!",
+  "bed": "Bed",
+  "exit_app": "Exit App",
+  "confirm_exit": "Are you sure you want to exit?",
+  "yes": "Yes",
+  "no": "No",
+  "updated_successfully": "Updated successfully!",
+  "update_failed": "Update failed",
+  "enter_another_number": "Please Enter Another Number",
+  "ok": "Ok",
+  "patient_informations": "Patient Informations",
+  "save": "Save",
+  "vital_signs": "Vital Signs",
+  "patient_settings": "Patient Settings",
+  "doctor_name": "Doctor Name",
+  "please_doctor_name": "Please enter doctor name",
+  "patientId": "Patient ID",
+  "confirm_modification_title": " Confirm Edit ",
+  "confirm_modification_content": "Enter the confirmation number to edit",
+  "message_incorrect_number": "Incorrect Number",
+  "Confirm": "Confirm",
+  "failed_to_delete_patient": "  failed to delete patient",
+  "show_pre_patients": "Previous Patients",
+  "pre_patients": "Previous Patients",
+  "no_pre_patients": " There is no Previous Patients",
+  "deleted_at": "Delete Date",
+  "logout": " Log Out",
+  "logout_confirm": "Are you sure to log out ?",
+  "search": "search...",
+  "type_question": "Type your question ..",
+  "smart_assistant": " AI Assistant",
+  "view_patients": " View Patients",
+  "choice_patients": "Choice Patients ",
+  "all_patients": " All Patients",
+  "my_patients": "Only My Patients",
+  "licenses": "licenses",
+  "how_works": " How It Works",
+  "how": "The app connects to a device that measures vital signs and transfers them to phone for remote patient monitoring"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

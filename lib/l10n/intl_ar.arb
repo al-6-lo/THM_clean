@@ -1,0 +1,99 @@
+{
+  "@@locale": "ar",
+  "welcome": "أهلاً وسهلاً",
+  "app_title": "مراقبة الصحة عن بُعد",
+  "settings": "الإعدادات",
+  "dark_mode": "الوضع الداكن",
+  "language": "اللغة",
+  "about_app": "حول التطبيق",
+  "rate_app": "تقييم التطبيق",
+  "select_language": "اختر اللغة",
+  "english": "الإنجليزية",
+  "arabic": "العربية",
+  "cancel": "إلغاء",
+  "submit": "إرسال",
+  "app_settings": "إعدادات التطبيق",
+  "version": "الإصدار",
+  "developedBy": "تم تطويره بواسطة",
+  "close": "إغلاق",
+  "average_rating": "متوسط التقييم",
+  "added_successfully": " تمت الإضافة بنجاح",
+  "deleted_successfully": "تم حذف المريض بنجاح",
+  "confirm_deleted_bed": "هل أنت متأكد أنك تريد حذف هذا المريض",
+  "delete": " حذف المريض",
+  "maximum_beds_reached": "تم الوصول إلى الحد الأقصى لعدد الأسرة",
+  "add_patient": "إضافة مريض",
+  "bed_number": "رقم السرير",
+  "please_bed_number": "يرجى إدخال رقم السرير",
+  "name": "الإسم",
+  "please_name": "يرجى إدخال الإسم",
+  "age": "العمر",
+  "please_age": "يرجى إدخال العمر",
+  "gender": "الجنس",
+  "male": "ذكر",
+  "female": "أنثى",
+  "phone_number": "رقم الهاتف",
+  "pre": "+٩٦٧",
+  "please_phone": "يرجى إدخال رقم الهاتف",
+  "phone_9": " يجب أن يتكون رقم الهاتف من ٩ أرقام",
+  "bed_exists": "رقم السرير موجود بالفعل ",
+  "add": "إضافة",
+  "no_beds_yet": " لا توجد أسرة حتى الان ",
+  "bed": "سرير",
+  "exit_app": "الخروج من التطبيق",
+  "confirm_exit": "هل أنت متأكد أنك تريد الخروج من التطبيق ؟",
+  "yes": "نعم",
+  "no": "لا",
+  "updated_successfully": "تم التحديث بنجاح",
+  "update_failed": "فشل التحديث",
+  "enter_another_number": "يرجى إدخال رقم اخر",
+  "ok": "موافق",
+  "patient_informations": "معلومات المريض",
+  "save": "حفظ",
+  "vital_signs": "العلامات الحيوية",
+  "patient_settings": "اعدادات المريض",
+  "doctor_name": "اسم الدكتور",
+  "please_doctor_name": "يرجى إدخال إسم الدكتور",
+  "patientId": "رقم المريض",
+  "confirm_modification_title": "تأكيد التعديل",
+  "confirm_modification_content": " ادخل رقم التأكيد للتعديل",
+  "message_incorrect_number": "رقم غير صحيح",
+  "Confirm": "تأكيد",
+  "failed_to_delete_patient": "فشل حذف المريض",
+  "show_pre_patients": " المرضى السابقين",
+  "pre_patients": " المرضى السابقين",
+  "no_pre_patients": "لا يوجد مرضى سابقين",
+  "deleted_at": "تاريخ الحذف",
+  "logout": " تسجيل الخروج",
+  "logout_confirm": " هل أنت متأكد من تسجيل الخروج ؟",
+  "search": "بحث .. ",
+  "type_question": " اكتب سؤالك .. ",
+  "smart_assistant": "المساعد الذكي",
+  "view_patients": " عرض المرضى",
+  "choice_patients": " اختيار المرضى",
+  "all_patients": "كل المرضى ",
+  "my_patients": " مرضاي فقط",
+  "licenses": "التراخيص",
+  "how_works": "كيف يعمل",
+  "how": "يتصل التطبيق بجهاز يقيس العلامات الحيوية وينقلها إلى الهاتف لمراقبة المريض عن بُعد "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+}
