@@ -6,6 +6,8 @@ import 'package:t_h_m/generated/l10n.dart';
 import 'vital_signs_card.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:t_h_m/Screens/patient_report/patient_report_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VitalSignsScreen extends StatefulWidget {
   final String bedNumber;
@@ -64,6 +66,44 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
     _listenToVitalSigns();
   }
 
+// إضافة هذه الدالة لحفظ البيانات في Firestore
+  void _saveVitalSignsToFirestore(Map<String, String> vitalSigns) async {
+    try {
+      // المرجع إلى الكولكشن "readings" داخل "beds"
+      DocumentReference bedDocRef =
+          FirebaseFirestore.instance.collection('beds').doc(widget.docId);
+      CollectionReference readingsCollection = bedDocRef.collection('readings');
+
+      // إضافة البيانات الجديدة
+      await readingsCollection.add({
+        'heart_rate': vitalSigns["heart_rate"],
+        'temperature': vitalSigns["temperature"],
+        'spo2': vitalSigns["spo2"],
+        'blood_pressure': vitalSigns["blood_pressure"],
+        'glucose': vitalSigns["glucose"],
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // تحديد عدد السجلات الموجود (يتم ترتيبها حسب "timestamp" نزولًا)
+      QuerySnapshot snapshot = await readingsCollection
+          .orderBy('timestamp', descending: true)
+          .limit(5) // نحصل على السجلات الستة الأخيرة
+          .get();
+
+      // إذا كانت السجلات أكثر من 5، يتم حذف الأقدم
+      if (snapshot.size > 5) {
+        // حذف أقدم سجل (أي السجل الأول في النتيجة بعد الترتيب)
+        var docToDelete = snapshot.docs.last;
+        await docToDelete.reference.delete();
+        print("Deleted oldest entry");
+      }
+
+      print("Data saved to Firestore successfully!");
+    } catch (e) {
+      print("Error saving data to Firestore: $e");
+    }
+  }
+
   void _listenToVitalSigns() {
     vitalSignsRef.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
@@ -80,6 +120,7 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
         });
 
         _checkVitalSigns();
+        _saveVitalSignsToFirestore(vitalSigns);
       }
     });
   }
@@ -88,9 +129,10 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
     if (_alertTimer == null || !_alertTimer!.isActive) {
       _alertTimer = Timer.periodic(Duration(seconds: 4), (timer) async {
         await _flutterTts.setLanguage("ar");
+        await _flutterTts.setLanguage("en");
         await _flutterTts.setPitch(1.0);
-        await _flutterTts.setSpeechRate(0.5);
-        await _flutterTts.speak("المريض ${widget.bedName} في خطر");
+        await _flutterTts.setSpeechRate(0.4);
+        await _flutterTts.speak("Patient ${widget.bedName} is in danger");
       });
     }
   }
@@ -186,7 +228,20 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
         iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         actions: [
           IconButton(
-            icon: Icon(Icons.info_outline_rounded,
+            icon: Icon(Icons.print,
+                color: Theme.of(context).colorScheme.onPrimary),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ReportScreen(
+                      patientId: widget.docId, bedName: widget.bedName),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.onPrimary),
             onPressed: () async {
               Navigator.push(

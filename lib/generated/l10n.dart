@@ -624,6 +624,41 @@ class S {
       args: [],
     );
   }
+
+  /// `Report`
+  String get report {
+    return Intl.message('Report', name: 'report', desc: '', args: []);
+  }
+
+  /// ` Generating Report`
+  String get generating_report {
+    return Intl.message(
+      ' Generating Report',
+      name: 'generating_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloading Report `
+  String get downloading_report {
+    return Intl.message(
+      'Downloading Report ',
+      name: 'downloading_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Saved Successfully`
+  String get saved_successfully {
+    return Intl.message(
+      ' Saved Successfully',
+      name: 'saved_successfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

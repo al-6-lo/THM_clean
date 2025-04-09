@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "developedBy": MessageLookupByLibrary.simpleMessage("تم تطويره بواسطة"),
     "doctor_name": MessageLookupByLibrary.simpleMessage("اسم الدكتور"),
+    "downloading_report": MessageLookupByLibrary.simpleMessage("تنزيل التقرير"),
     "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
     "enter_another_number": MessageLookupByLibrary.simpleMessage(
       "يرجى إدخال رقم اخر",
@@ -73,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+    "generating_report": MessageLookupByLibrary.simpleMessage("توليد التقرير"),
     "how": MessageLookupByLibrary.simpleMessage(
       "يتصل التطبيق بجهاز يقيس العلامات الحيوية وينقلها إلى الهاتف لمراقبة المريض عن بُعد ",
     ),
@@ -123,7 +125,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "pre": MessageLookupByLibrary.simpleMessage("+٩٦٧"),
     "pre_patients": MessageLookupByLibrary.simpleMessage(" المرضى السابقين"),
     "rate_app": MessageLookupByLibrary.simpleMessage("تقييم التطبيق"),
+    "report": MessageLookupByLibrary.simpleMessage("تقرير"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "saved_successfully": MessageLookupByLibrary.simpleMessage(
+      " تم الحفظ بنجاح",
+    ),
     "search": MessageLookupByLibrary.simpleMessage("بحث .. "),
     "select_language": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),

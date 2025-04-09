@@ -74,23 +74,11 @@
   "my_patients": "Only My Patients",
   "licenses": "licenses",
   "how_works": " How It Works",
-  "how": "The app connects to a device that measures vital signs and transfers them to phone for remote patient monitoring"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  "how": "The app connects to a device that measures vital signs and transfers them to phone for remote patient monitoring",
+  "report": "Report",
+  "generating_report": " Generating Report",
+  "downloading_report": "Downloading Report ",
+  "saved_successfully": " Saved Successfully"
 
 
 

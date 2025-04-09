@@ -63,6 +63,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "developedBy": MessageLookupByLibrary.simpleMessage("Developed By"),
     "doctor_name": MessageLookupByLibrary.simpleMessage("Doctor Name"),
+    "downloading_report": MessageLookupByLibrary.simpleMessage(
+      "Downloading Report ",
+    ),
     "english": MessageLookupByLibrary.simpleMessage("English"),
     "enter_another_number": MessageLookupByLibrary.simpleMessage(
       "Please Enter Another Number",
@@ -73,6 +76,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+    "generating_report": MessageLookupByLibrary.simpleMessage(
+      " Generating Report",
+    ),
     "how": MessageLookupByLibrary.simpleMessage(
       "The app connects to a device that measures vital signs and transfers them to phone for remote patient monitoring",
     ),
@@ -125,7 +131,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "pre": MessageLookupByLibrary.simpleMessage("+967"),
     "pre_patients": MessageLookupByLibrary.simpleMessage("Previous Patients"),
     "rate_app": MessageLookupByLibrary.simpleMessage("Rate the App"),
+    "report": MessageLookupByLibrary.simpleMessage("Report"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
+    "saved_successfully": MessageLookupByLibrary.simpleMessage(
+      " Saved Successfully",
+    ),
     "search": MessageLookupByLibrary.simpleMessage("search..."),
     "select_language": MessageLookupByLibrary.simpleMessage("Select Language"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
