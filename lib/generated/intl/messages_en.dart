@@ -62,6 +62,12 @@ class MessageLookup extends MessageLookupByLibrary {
       " Patient deleted successfully!",
     ),
     "developedBy": MessageLookupByLibrary.simpleMessage("Developed By"),
+    "deviceConnected": MessageLookupByLibrary.simpleMessage(
+      "Device Connected ",
+    ),
+    "deviceDisconnected": MessageLookupByLibrary.simpleMessage(
+      " Device Disconnected",
+    ),
     "doctor_name": MessageLookupByLibrary.simpleMessage("Doctor Name"),
     "downloading_report": MessageLookupByLibrary.simpleMessage(
       "Downloading Report ",
@@ -143,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Previous Patients",
     ),
     "smart_assistant": MessageLookupByLibrary.simpleMessage(" AI Assistant"),
+    "stopped_alarm": MessageLookupByLibrary.simpleMessage("Stopped Alarm "),
     "submit": MessageLookupByLibrary.simpleMessage("Submit"),
     "type_question": MessageLookupByLibrary.simpleMessage(
       "Type your question ..",

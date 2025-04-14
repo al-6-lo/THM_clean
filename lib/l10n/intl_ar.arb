@@ -79,7 +79,10 @@
   "report": "تقرير",
   "generating_report": "توليد التقرير",
   "downloading_report": "تنزيل التقرير",
-  "saved_successfully": " تم الحفظ بنجاح"
+  "saved_successfully": " تم الحفظ بنجاح",
+  "stopped_alarm": " إيقاف التنبيه",
+  "deviceConnected": "الجهاز متصل ",
+  "deviceDisconnected": "الجهاز غير متصل "
 
 
 

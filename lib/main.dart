@@ -13,6 +13,7 @@ import 'package:t_h_m/Providers/localization_provider.dart'; // استيراد �
 import 'Screens/login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:t_h_m/alert.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,8 @@ void main() async {
     MultiProvider(
       // استخدام MultiProvider لتوفير أكثر من مزود
       providers: [
+        ChangeNotifierProvider(create: (_) => AlertProvider()),
+
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(
             create: (context) => LocaleProvider()), // إضافة LocaleProvider

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:t_h_m/Screens/vital_signs/vital_signs_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:t_h_m/generated/l10n.dart';
+import 'package:t_h_m/Screens/vital_signs/vital_signs_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class BedItem extends StatelessWidget {
+class BedItem extends StatefulWidget {
   final String docId;
   final String bedNumber;
   final String bedName;
@@ -11,6 +13,11 @@ class BedItem extends StatelessWidget {
   final String phoneNumber;
   final String doctorName;
   final String userRole;
+  final String heartRate;
+  final String temperature;
+  final String spo2;
+  final String bloodPressure;
+  final String glucose;
 
   const BedItem({
     Key? key,
@@ -22,7 +29,73 @@ class BedItem extends StatelessWidget {
     required this.phoneNumber,
     required this.doctorName,
     required this.userRole,
+    required this.heartRate,
+    required this.temperature,
+    required this.spo2,
+    required this.bloodPressure,
+    required this.glucose,
   }) : super(key: key);
+
+  @override
+  _BedItemState createState() => _BedItemState();
+}
+
+class _BedItemState extends State<BedItem> {
+  final FirebaseDatabase database = FirebaseDatabase.instanceFor(
+    app: Firebase.app(),
+    databaseURL: "https://thm1-95526-default-rtdb.firebaseio.com/",
+  );
+
+  late DatabaseReference vitalSignsRef;
+  Map<String, String> vitalSigns = {
+    "heart_rate": "Loading...",
+    "temperature": "Loading...",
+    "spo2": "Loading...",
+    "blood_pressure": "Loading...",
+    "glucose": "Loading...",
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeDatabase();
+  }
+
+  void _initializeDatabase() {
+    vitalSignsRef = database.ref();
+    _listenToVitalSigns();
+  }
+
+  bool isConnected = false; // حالة الاتصال
+
+  void _listenToVitalSigns() {
+    vitalSignsRef.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data != null) {
+        setState(() {
+          vitalSigns = {
+            "heart_rate": data["HR"]?.toString() ?? "N/A",
+            "temperature": data["Temp"]?.toString() ?? "N/A",
+            "spo2": data["SPO2"]?.toString() ?? "N/A",
+            "blood_pressure": data["BP"]?.toString() ?? "N/A",
+            "glucose": data["Glucose"]?.toString() ?? "N/A",
+          };
+
+          // نتحقق من الوقت
+          String? timestampStr = data["timestamp"]?.toString();
+          if (timestampStr != null) {
+            DateTime lastUpdate = DateTime.parse(timestampStr);
+            Duration difference = DateTime.now().difference(lastUpdate);
+            isConnected = difference.inSeconds <
+                10; // متصل إذا آخر تحديث أقل من 10 ثوانٍ مثلاً
+          } else {
+            isConnected = false;
+          }
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +105,14 @@ class BedItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => VitalSignsScreen(
-              docId: docId,
-              bedNumber: bedNumber,
-              bedName: bedName,
-              age: age,
-              gender: gender,
-              phoneNumber: phoneNumber,
-              doctorName: doctorName,
-              userRole: userRole,
+              docId: widget.docId,
+              bedNumber: widget.bedNumber,
+              bedName: widget.bedName,
+              age: widget.age,
+              gender: widget.gender,
+              phoneNumber: widget.phoneNumber,
+              doctorName: widget.doctorName,
+              userRole: widget.userRole,
             ),
           ),
         );
@@ -58,23 +131,73 @@ class BedItem extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // عرض رقم السرير
+            Row(
+              children: [
+                Text(
+                  isConnected ? "🟢" : "🔴",
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(width: 6),
+                Text(
+                  "${S.of(context).bed} ${widget.bedNumber}",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            // عرض العلامات الحيوية
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${S.of(context).bed} $bedNumber",
+                  "HR: ${vitalSigns["heart_rate"]} BPM",
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "Temp: ${vitalSigns["temperature"]} °C",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "Oxygen: ${vitalSigns["spo2"]} %",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "BP: ${vitalSigns["blood_pressure"]} mmHg",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "Glucose: ${vitalSigns["glucose"]} mg/dL",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
-            Icon(Icons.arrow_forward_ios,
-                color: Theme.of(context).colorScheme.onBackground),
           ],
         ),
       ),

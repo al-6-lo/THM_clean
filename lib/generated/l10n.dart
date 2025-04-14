@@ -659,6 +659,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Stopped Alarm `
+  String get stopped_alarm {
+    return Intl.message(
+      'Stopped Alarm ',
+      name: 'stopped_alarm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device Connected `
+  String get deviceConnected {
+    return Intl.message(
+      'Device Connected ',
+      name: 'deviceConnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Device Disconnected`
+  String get deviceDisconnected {
+    return Intl.message(
+      ' Device Disconnected',
+      name: 'deviceDisconnected',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

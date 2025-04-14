@@ -117,19 +117,25 @@ class ReportScreen extends StatelessWidget {
               ],
               data: records.map((record) {
                 final timestamp = record['timestamp'];
-                final time = timestamp != null && timestamp is Timestamp
+
+                // التأكد من أن timestamp ليس null وأنه من نوع Timestamp
+                final time = (timestamp != null && timestamp is Timestamp)
                     ? timestamp.toDate()
                     : null;
+
+                // إذا كانت القيمة time موجودة، نقوم بتنسيق التاريخ، وإذا لم تكن موجودة نتركها فارغة
+                final formattedTime = time != null
+                    ? "${time.year}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')} "
+                        "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}"
+                    : "";
+
                 return [
-                  time != null
-                      ? "${time.year}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')} "
-                          "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}"
-                      : "Unknown",
-                  "${record['heart_rate'] ?? '-'} BPM",
-                  "${record['temperature'] ?? '-'} °C",
-                  "${record['spo2'] ?? '-'} %",
-                  "${record['blood_pressure'] ?? '-'} mmHg",
-                  "${record['glucose'] ?? '-'} mg/dL"
+                  formattedTime, // إما التاريخ أو فارغ إذا لم يوجد
+                  "${record['heart_rate']} BPM",
+                  "${record['temperature']} °C",
+                  "${record['spo2']} %",
+                  "${record['blood_pressure']} mmHg",
+                  "${record['glucose']} mg/dL",
                 ];
               }).toList(),
               cellStyle: pw.TextStyle(fontSize: 11),
@@ -237,7 +243,8 @@ class ReportScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final record = records[index];
                           final timestamp =
-                              (record['timestamp'] as Timestamp).toDate();
+                              (record['timestamp'] as Timestamp?)?.toDate() ??
+                                  DateTime.now();
 
                           return Card(
                             margin: EdgeInsets.symmetric(vertical: 5),

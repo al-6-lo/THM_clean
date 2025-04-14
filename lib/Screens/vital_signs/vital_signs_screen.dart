@@ -54,11 +54,17 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
 
   Timer? _alertTimer;
   bool _isDangerActive = false;
+  Timer? _savingTimer;
+  bool isAlertManuallyStopped = false;
 
   @override
   void initState() {
     super.initState();
     _initializeDatabase();
+// حفظ البيانات كل 5 دقائق
+    _savingTimer = Timer.periodic(Duration(minutes: 5), (timer) {
+      _saveVitalSignsToFirestore(vitalSigns);
+    });
   }
 
   void _initializeDatabase() {
@@ -120,12 +126,17 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
         });
 
         _checkVitalSigns();
-        _saveVitalSignsToFirestore(vitalSigns);
       }
     });
   }
 
   void _startRepeatingAlert() {
+    // إذا تم إيقاف التنبيه يدويًا، لا نبدأ التكرار
+    if (isAlertManuallyStopped) {
+      return;
+    }
+
+    // إذا كان المؤقت غير موجود أو غير نشط، نبدأ التكرار
     if (_alertTimer == null || !_alertTimer!.isActive) {
       _alertTimer = Timer.periodic(Duration(seconds: 4), (timer) async {
         await _flutterTts.setLanguage("ar");
@@ -135,6 +146,18 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
         await _flutterTts.speak("Patient ${widget.bedName} is in danger");
       });
     }
+  }
+
+  void _stopAlertManually() async {
+    await _flutterTts.stop(); // إيقاف التنبيه الصوتي
+    _alertTimer?.cancel(); // إلغاء المؤقت
+    _alertTimer = null; // تعيين المؤقت إلى null
+
+    // تحديث الحالة لتوقف التنبيه يدويًا
+    setState(() {
+      isAlertManuallyStopped = true;
+      _isDangerActive = false; // التأكد من أن التنبيه تم إيقافه
+    });
   }
 
   void _stopRepeatingAlert() {
@@ -198,10 +221,14 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
       }
     }
 
-    if (isInDanger) {
-      _startRepeatingAlert();
-      _isDangerActive = true;
-    } else {
+    // إذا كانت حالة الخطر موجودة ولكن تم إيقاف التنبيه يدويًا، لا نبدأ التنبيه مجددًا
+    if (isInDanger && !isAlertManuallyStopped) {
+      if (!_isDangerActive) {
+        _startRepeatingAlert();
+        _isDangerActive = true;
+      }
+    } else if (!isInDanger) {
+      // إذا كانت حالة الخطر قد انتهت، قم بإيقاف التنبيه
       if (_isDangerActive) {
         _stopRepeatingAlert();
         _isDangerActive = false;
@@ -211,7 +238,10 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
 
   @override
   void dispose() {
-    _stopRepeatingAlert(); // إيقاف التايمر عند مغادرة الشاشة
+    // إيقاف التايمرات و التنبيهات الصوتية بشكل صحيح
+    _stopRepeatingAlert(); // تأكد من إيقاف التنبيه
+    _flutterTts.stop(); // إيقاف التنبيه الصوتي
+    _savingTimer?.cancel(); // إيقاف التايمر الخاص بحفظ البيانات
     super.dispose();
   }
 
@@ -293,6 +323,17 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
               label: 'Glucose',
               value: '${vitalSigns["glucose"]} mg/dL',
             ),
+            SizedBox(height: 20), // مسافة بين الكروت والزر
+            if (_isDangerActive && !isAlertManuallyStopped)
+              ElevatedButton.icon(
+                icon: Icon(Icons.volume_off),
+                label: Text(S.of(context).stopped_alarm),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: _stopAlertManually,
+              ),
           ],
         ),
       ),

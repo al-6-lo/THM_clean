@@ -167,7 +167,14 @@ class _AddBedsScreenState extends State<AddBedsScreen> {
                     return aTimestamp.compareTo(bTimestamp);
                   });
 
-                  return ListView.builder(
+                  return GridView.builder(
+                    padding: const EdgeInsets.all(10),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // عنصرين في كل صف
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.85, // اضبطيه حسب شكل الكرت
+                    ),
                     itemCount: beds.length,
                     itemBuilder: (context, index) {
                       var bed = beds[index];
@@ -182,6 +189,11 @@ class _AddBedsScreenState extends State<AddBedsScreen> {
                         phoneNumber: bedData?['phoneNumber'] ?? 'Unknown',
                         doctorName: bedData?['doctorName'] ?? 'Unknown',
                         userRole: userRole ?? "Unknown",
+                        heartRate: bedData?['heart_rate'] ?? 'Unknown',
+                        temperature: bedData?['temperature'] ?? 'Unknown',
+                        spo2: bedData?['spo2'] ?? 'Unknown',
+                        bloodPressure: bedData?['blood_pressure'] ?? 'Unknown',
+                        glucose: bedData?['glucose'] ?? 'Unknown',
                       );
                     },
                   );

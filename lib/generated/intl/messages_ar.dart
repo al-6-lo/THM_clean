@@ -62,6 +62,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم حذف المريض بنجاح",
     ),
     "developedBy": MessageLookupByLibrary.simpleMessage("تم تطويره بواسطة"),
+    "deviceConnected": MessageLookupByLibrary.simpleMessage("الجهاز متصل "),
+    "deviceDisconnected": MessageLookupByLibrary.simpleMessage(
+      "الجهاز غير متصل ",
+    ),
     "doctor_name": MessageLookupByLibrary.simpleMessage("اسم الدكتور"),
     "downloading_report": MessageLookupByLibrary.simpleMessage("تنزيل التقرير"),
     "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
@@ -137,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
       " المرضى السابقين",
     ),
     "smart_assistant": MessageLookupByLibrary.simpleMessage("المساعد الذكي"),
+    "stopped_alarm": MessageLookupByLibrary.simpleMessage(" إيقاف التنبيه"),
     "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
     "type_question": MessageLookupByLibrary.simpleMessage(" اكتب سؤالك .. "),
     "update_failed": MessageLookupByLibrary.simpleMessage("فشل التحديث"),

@@ -78,7 +78,11 @@
   "report": "Report",
   "generating_report": " Generating Report",
   "downloading_report": "Downloading Report ",
-  "saved_successfully": " Saved Successfully"
+  "saved_successfully": " Saved Successfully",
+  "stopped_alarm": "Stopped Alarm ",
+  "deviceConnected": "Device Connected ",
+  "deviceDisconnected": " Device Disconnected"
+
 
 
 

@@ -47,6 +47,10 @@ class _AIChatScreenState extends State<AIChatScreen> {
     });
 
     scrollToBottom();
+
+    // الكشف عن اللغة باستخدام دالة بسيطة
+    String language = _detectLanguage(userMessage);
+
     try {
       final response = await Dio().post(
         'https://openrouter.ai/api/v1/chat/completions',
@@ -62,7 +66,9 @@ class _AIChatScreenState extends State<AIChatScreen> {
           "messages": [
             {
               "role": "system",
-              "content": "You are a helpful medical assistant."
+              "content": language == 'ar'
+                  ? "أنت مساعد طبي يساعد في الأسئلة الطبية فقط."
+                  : "You are a helpful medical assistant. Please only respond to medical questions related to health, symptoms, and treatments. If the question is not medical, respond with 'Sorry, I can only answer medical questions.'"
             },
             {"role": "user", "content": userMessage},
           ],
@@ -81,6 +87,16 @@ class _AIChatScreenState extends State<AIChatScreen> {
       });
       scrollToBottom();
     }
+  }
+
+  // دالة للكشف عن اللغة بناءً على الحروف
+  String _detectLanguage(String text) {
+    // إذا كان النص يحتوي على أحرف عربية (يعني أنه باللغة العربية)
+    if (text.contains(RegExp(r'[\u0600-\u06FF]'))) {
+      return 'ar'; // العربية
+    }
+    // إذا كان النص لا يحتوي على أحرف عربية
+    return 'en'; // الإنجليزية
   }
 
   void scrollToBottom() {
