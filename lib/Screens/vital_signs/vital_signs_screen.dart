@@ -110,6 +110,37 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
     }
   }
 
+  Map<String, dynamic> getNormalRanges(int age, String gender) {
+    if (age <= 12) {
+      // أطفال
+      return {
+        'heart_rate': [70, 120],
+        'temperature': 37.5,
+        'spo2': 92,
+        'blood_pressure': [90, 110], // systolic range
+        'glucose': 140,
+      };
+    } else if (age <= 60) {
+      // بالغين
+      return {
+        'heart_rate': gender.toLowerCase() == 'female' ? [60, 100] : [60, 110],
+        'temperature': 37.2,
+        'spo2': 90,
+        'blood_pressure': [90, 120],
+        'glucose': 140,
+      };
+    } else {
+      // كبار سن
+      return {
+        'heart_rate': [60, 100],
+        'temperature': 37.0,
+        'spo2': 90,
+        'blood_pressure': [100, 140],
+        'glucose': 150,
+      };
+    }
+  }
+
   void _listenToVitalSigns() {
     vitalSignsRef.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
@@ -166,24 +197,24 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
   }
 
   void _checkVitalSigns() async {
-    const double normalHeartRateLower = 60;
-    const double normalHeartRateUpper = 200;
-    const double normalTemperature = 37;
-    const double normalSpo2Lower = 90;
-    const double normalBloodPressureLower = 90;
-    const double normalBloodPressureUpper = 120;
-    const double normalGlucoseUpper = 140;
+    final normalRanges = getNormalRanges(widget.age, widget.gender);
+    final heartRateRange = normalRanges['heart_rate'];
+    final normalTemperature = normalRanges['temperature'];
+    final normalSpo2Lower = normalRanges['spo2'];
+    final bloodPressureRange = normalRanges['blood_pressure'];
+    final normalGlucoseUpper = normalRanges['glucose'];
 
     bool isInDanger = false;
 
+    // نبض القلب
     if (double.tryParse(vitalSigns["heart_rate"] ?? "") != null) {
       double heartRate = double.parse(vitalSigns["heart_rate"]!);
-      if (heartRate < normalHeartRateLower ||
-          heartRate > normalHeartRateUpper) {
+      if (heartRate < heartRateRange[0] || heartRate > heartRateRange[1]) {
         isInDanger = true;
       }
     }
 
+// الحرارة
     if (double.tryParse(vitalSigns["temperature"] ?? "") != null) {
       double temperature = double.parse(vitalSigns["temperature"]!);
       if (temperature > normalTemperature) {
@@ -191,6 +222,7 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
       }
     }
 
+// الأوكسجين
     if (double.tryParse(vitalSigns["spo2"] ?? "") != null) {
       double spo2 = double.parse(vitalSigns["spo2"]!);
       if (spo2 < normalSpo2Lower) {
@@ -198,22 +230,24 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
       }
     }
 
+// الضغط
     if (vitalSigns["blood_pressure"] != null) {
       var bloodPressure = vitalSigns["blood_pressure"]!.split('/');
       if (bloodPressure.length == 2) {
         double? systolic = double.tryParse(bloodPressure[0]);
         double? diastolic = double.tryParse(bloodPressure[1]);
         if (systolic != null && diastolic != null) {
-          if (systolic < normalBloodPressureLower ||
-              systolic > normalBloodPressureUpper ||
-              diastolic < normalBloodPressureLower ||
-              diastolic > normalBloodPressureUpper) {
+          if (systolic < bloodPressureRange[0] ||
+              systolic > bloodPressureRange[1] ||
+              diastolic < bloodPressureRange[0] ||
+              diastolic > bloodPressureRange[1]) {
             isInDanger = true;
           }
         }
       }
     }
 
+// الجلوكوز
     if (double.tryParse(vitalSigns["glucose"] ?? "") != null) {
       double glucose = double.parse(vitalSigns["glucose"]!);
       if (glucose > normalGlucoseUpper) {

@@ -27,6 +27,7 @@ class _AddBedsScreenState extends State<AddBedsScreen> {
   String searchQuery = '';
   String selectedPatientType = 'all';
   String? doctorName;
+  bool isGridView = false;
 
   @override
   void initState() {
@@ -90,6 +91,14 @@ class _AddBedsScreenState extends State<AddBedsScreen> {
                 ),
           backgroundColor: Theme.of(context).colorScheme.primary,
           actions: [
+            IconButton(
+              icon: Icon(isGridView ? Icons.view_list : Icons.grid_view),
+              onPressed: () {
+                setState(() {
+                  isGridView = !isGridView;
+                });
+              },
+            ),
             IconButton(
               icon: Icon(
                 _isSearching ? Icons.close : Icons.search,
@@ -167,36 +176,65 @@ class _AddBedsScreenState extends State<AddBedsScreen> {
                     return aTimestamp.compareTo(bTimestamp);
                   });
 
-                  return GridView.builder(
-                    padding: const EdgeInsets.all(10),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // عنصرين في كل صف
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.85, // اضبطيه حسب شكل الكرت
-                    ),
-                    itemCount: beds.length,
-                    itemBuilder: (context, index) {
-                      var bed = beds[index];
-                      var bedData = bed.data() as Map<String, dynamic>?;
+                  return isGridView
+                      ? GridView.builder(
+                          padding: const EdgeInsets.all(10),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // عنصرين في كل صف
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 0.85, // اضبطيه حسب شكل الكرت
+                          ),
+                          itemCount: beds.length,
+                          itemBuilder: (context, index) {
+                            var bed = beds[index];
+                            var bedData = bed.data() as Map<String, dynamic>?;
 
-                      return BedItem(
-                        docId: bed.id,
-                        bedNumber: bedData?['bedNumber'] ?? 'Unknown',
-                        bedName: bedData?['bedName'] ?? 'Unknown',
-                        age: bedData?['age'] ?? 0,
-                        gender: bedData?['gender'] ?? 'Unknown',
-                        phoneNumber: bedData?['phoneNumber'] ?? 'Unknown',
-                        doctorName: bedData?['doctorName'] ?? 'Unknown',
-                        userRole: userRole ?? "Unknown",
-                        heartRate: bedData?['heart_rate'] ?? 'Unknown',
-                        temperature: bedData?['temperature'] ?? 'Unknown',
-                        spo2: bedData?['spo2'] ?? 'Unknown',
-                        bloodPressure: bedData?['blood_pressure'] ?? 'Unknown',
-                        glucose: bedData?['glucose'] ?? 'Unknown',
-                      );
-                    },
-                  );
+                            return BedItem(
+                              isGrid: true, // كأنه يقول "اعرض كل شي"
+
+                              docId: bed.id,
+                              bedNumber: bedData?['bedNumber'] ?? 'Unknown',
+                              bedName: bedData?['bedName'] ?? 'Unknown',
+                              age: bedData?['age'] ?? 0,
+                              gender: bedData?['gender'] ?? 'Unknown',
+                              phoneNumber: bedData?['phoneNumber'] ?? 'Unknown',
+                              doctorName: bedData?['doctorName'] ?? 'Unknown',
+                              userRole: userRole ?? "Unknown",
+                              heartRate: bedData?['heart_rate'] ?? 'Unknown',
+                              temperature: bedData?['temperature'] ?? 'Unknown',
+                              spo2: bedData?['spo2'] ?? 'Unknown',
+                              bloodPressure:
+                                  bedData?['blood_pressure'] ?? 'Unknown',
+                              glucose: bedData?['glucose'] ?? 'Unknown',
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          itemCount: beds.length,
+                          itemBuilder: (context, index) {
+                            var bed = beds[index];
+                            var bedData = bed.data() as Map<String, dynamic>?;
+
+                            return BedItem(
+                              isGrid: false,
+                              docId: bed.id,
+                              bedNumber: bedData?['bedNumber'] ?? 'Unknown',
+                              bedName: '',
+                              age: 0,
+                              gender: '',
+                              phoneNumber: '',
+                              doctorName: '',
+                              userRole: userRole ?? "Unknown",
+                              heartRate: '',
+                              temperature: '',
+                              spo2: '',
+                              bloodPressure: '',
+                              glucose: '',
+                            );
+                          },
+                        );
                 },
               ),
         floatingActionButton: (userRole == "Admin")
